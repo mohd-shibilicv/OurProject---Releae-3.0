@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ subject }}</title>
+</head>
+<body>
+    <div style="display: flex; flex-direction: column; justify-content: center;">
+        <h3 style="background-color: lightblue; font-size: 20px;">{{ content }}</h3>
+        <p style="font-size: 15px; color: #184d1dd0;">The message is sent by {{ email }}</p>
+        {% if cc != '' %}
+        <p>CC : {{ cc }}</p>
+        {% else %}
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,468 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap 5 css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Fontawsome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet' />
+    <!-- unicons -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <!-- Line Awsome Icons -->
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <!-- <link rel="icon" href="{% static 'img/favicon.ico' %}" > -->
+    <!-- logo -->
+    <link rel="icon" href="{% static 'img/ai.ico' %}" >
+    <!-- Static -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <title>{% block title %}Home | OurProject.com{% endblock title %}</title>
+    <!-- Scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+</head>
+<body>
+    <div class="wrapper">
+        {% block image %}
+        <style>
+            body {
+                background-color: #101c32;
+                background-position: center 0px;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover;
+            }
+        </style>
+        {% endblock image %}
+        <!--==================== NAVBAR=================================== -->
+        <header>
+            {% block navbar %}
+            <nav class="navbar navbar-expand-lg navbar-dark" style="animation: fadeIn 5s forwards;">
+                <!-- Icon and Title Content -->
+                <div class="col-sm team-title">
+                    <a href="" class="navbar-brand flex-grow-1" style="color: #fff; margin-left: 25px; display: flex; align-items: center;">
+                        {% block nav-content %}
+                        <i class="fa-solid fa-people-group" style="color: rgb(143, 141, 141); font-size: 30px;"></i>
+                        &nbsp;&nbsp;
+                        <span style="font-size: 24px; font-weight: 600; color: #009b72;">OurProject</span>
+                        {% endblock nav-content %}
+                    </a>
+                </div>
+                <!-- Date and Time content 2 -->
+                {% block datetime %}{% endblock datetime %}
+
+                <!-- Hamburgur (content 3) -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    {% block login %}
+                    {% if user.is_authenticated %}
+                    <div class="form-inline my-2 my-lg-0">
+                        <a href="{% url 'inbox' %}" class="btn btn-outline-success my-2 my-sm-0">Inbox</a>
+                    </div>
+                    {% else %}
+                    <div class="form-inline my-2 my-lg-0">
+                        <a href="{% url 'inbox' %}" class="btn btn-outline-success my-2 my-sm-0">Login</a>
+                    </div>
+                    {% endif %}
+                    {% endblock login %}  
+                </div>
+            </nav>
+            {% endblock navbar %}
+        </header>
+        <!--=============== Block content (root) ================-->
+        {% block content %}
+        {% endblock content %}
+    </div>
+    <!-- Wrapper End -->
+
+    <!-- Footer======================================= -->
+    
+    {% block footer %}
+    <footer class="bg-dark text-center text-lg-start" id="footer" style="color: rgba(210, 208, 208, 0.884); text-transform: uppercase;">
+        <div class="text-center p-3" style="background-color: #101c32; font-size: 15px; font-weight: 600;">
+            &copy; {% now "Y" %} Copyright
+            <a href="#" class="text-light" style="text-decoration: none;">
+                <span style="color: #11c094e4;">www.OurProject.com</span>
+            </a>
+        </div>
+    </footer>
+    {% endblock footer %}
+        
+    
+    {% block auto-logout %}
+    <!-- logout warning modal btn call -->
+    <button id="warning" class="btn" data-bs-toggle="modal" data-bs-target="#warningModal" style="display: none;"></button>
+    <!-- after logout info modal call -->
+    <a href="/autologout" id="info" class="btn" style="display: none;"></a>
+    {% endblock auto-logout %}
+        
+    <!-- Includes  -->
+    {% include 'modals/logout.html' %}
+    {% include 'my_modal/messages.html' %}
+    {% include 'my_modal/replys.html' %}
+    {% include 'modals/logoutInfo.html' %}
+    {% include 'modals/logoutWarning.html' %}
+
+    <!-- MESSAGE FROM BACKEND (login) -->
+    {% if form.errors %}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        swal("Access Denied!", "Retry","info")
+    </script>
+    {% endif %}
+
+    <!-- MESSAGE FROM BACKEND (suuccess message) -->
+    {% for message in messages %}
+        {% if message.tags == 'success' %}
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            var m = "{{ message }}"
+            swal("Done!", m, "success")
+        </script>
+        {% endif %}
+    {% endfor %}
+    <!-- MESSAGE FROM BACKEND (Error message) -->
+    {% for message in messages %}
+        {% if message.tags == 'error' %}
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            var m = "{{ message }}"
+            swal("Error", m, "error")
+        </script>
+        {% endif %}
+    {% endfor %}
+    <!-- Auto logout -->
+    {% for message in messages %}
+        {% if message.tags == 'info' %}
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function() {
+                $('#infoModal').modal('show');
+            });
+        </script>
+        {% endif %}
+    {% endfor %}
+    {% block backscript %}
+    <script language="javascript" type="text/javascript">
+        function DisableBackButton() {
+            window.history.forward()
+        }
+        DisableBackButton();
+        window.onload = DisableBackButton;
+        window.onpageshow = function(evt) { if (evt.persisted) DisableBackButton() }
+        window.onunload = function() { void (0) }
+    </script>
+    {% endblock backscript %}
+    <!-- Bootstrap 5 js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <!-- InputMask -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8-beta.47/jquery.inputmask.min.js" integrity="sha512-i64eMqbyAAnlBbH0bs+xZOgq9K6bfkhL/OmZulONnbwJPA0MKRuIiZMeIyC06BnYSO4c9RpCZk11tm8uVyAtZg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- SweetAlert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- Static JS -->
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <!-- Scroll reveal customization -->
+    <script>
+        ScrollReveal({
+            reset: true,
+            distance: '60px',
+            duration: 2500,
+            delay: 400
+        });
+
+        // ScrollReveal().reveal('.hero-title', {delay: 200, origin: 'left'});
+        // ScrollReveal().reveal('.desc-content', {delay: 200, origin: 'left'});
+        // ScrollReveal().reveal('.buttons', {delay: 200, origin: 'left'});
+        // ScrollReveal().reveal('.btnoutlinesuccess', {delay: 600, origin: 'right'});
+        // ScrollReveal().reveal('.team-title', {delay: 400, origin: 'left'});
+        // ScrollReveal().reveal('.collapse', {delay: 400, origin: 'left'});
+        // ScrollReveal().reveal('.main', {delay: 200, origin: 'left', interval: 400});
+        ScrollReveal().reveal('#footer', {delay: 200, origin: 'bottom', interval: 400});
+
+    </script>
+
+    <!-- Script for 9 dots -->
+    <script>
+        let navigation = document.querySelector('.navigation');
+        let close = document.querySelector('.close');
+        navigation.onclick = function() {
+            navigation.classList.add('active');
+        }
+        close.onclick = function() {
+            navigation.classList.remove('active');
+        }
+    </script>
+
+    <!-- Script for feedback -->
+    <script>
+        let level = document.querySelectorAll('.feedback-level');
+        let levels = document.querySelectorAll('.levels');
+        levels.onclick = function() {
+            level.classList.add('active');
+        }
+    </script>
+
+    <!-- Script for profiles section -->
+    <script>
+        let imgBx = document.querySelectorAll('.imgBx');
+        let contentBx = document.querySelectorAll('.contentBx');
+
+        for(let i=0; i<imgBx.length; i++){
+            imgBx[i].addEventListener('mouseover', function(){
+                for(let i=0; i<contentBx.length; i++){
+                    contentBx[i].className = 'contentBx';
+                }
+                document.getElementById(this.dataset.id).className = 'contentBx active';
+
+                for(let i=0; i<imgBx.length; i++){
+                    imgBx[i].className = 'imgBx';
+                }
+                this.className = 'imgBx active';
+            })
+        }
+    </script>
+    <!-- Function to show and hide password -->
+    <script>
+        function myFunction() {
+            var p = document.getElementById("password");
+            var e = document.getElementById("eye");
+            if (p.type == "password") {
+                p.type = "text";
+                e.classList = "bx bx-show eye-icon";
+                e.title = "Hide"
+            }
+            else {
+                p.type = "password";
+                e.classList = "bx bx-hide eye-icon";
+                e.title = "Show"
+            }
+        }
+    </script>
+
+    <!-- side bar script -->
+    <script>
+        const btn = document.getElementById('menu-btn');
+
+        const overlay = document.getElementById('overlay');
+
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', navToggle);
+
+        function navToggle(){
+            btn.classList.toggle('open');
+            overlay.classList.toggle('overlay-show');
+            document.body.classList.toggle('stop-scroll');
+            menu.classList.toggle('show-menu');
+        }
+    </script>
+    <!-- Script to close off canavas when the button is clicked -->
+    <script>
+        jQuery("#offcanvasRight, .offcanvas-body a").click(function() {
+            console.log($(this).attr('href'));
+            jQuery('.offcanvas').offcanvas('hide');
+        });
+    </script>
+
+    <!-- Script to set file upload size limit to 2mb -->
+    <script>
+        var upload = document.getElementById('file');
+        upload.onchange = function() {
+            if (this.files[0].size > 2 * 1048576 ) {
+                swal("Attention !", "Maximum allowed size is 2mb", "info");
+                this.value = "";
+            };
+        };
+    </script>
+    <!--  Spinner-->
+    <script>
+        jQuery(function($) {
+            $(document).ajaxSend(function() {
+                $('#bg-spinner').fadeIn(500);
+            });
+            $('.send-email').click(function() {
+                $.ajax({
+                type: 'GET',
+                success: function(data) {
+                    var d = $.parseJSON(data);
+                    alert(d.Test);
+                }
+                }).done(function() {
+                setTimeout(function() {
+                    $('#bg-spinner').fadeOut(500);
+                }, 700);
+                });
+            });
+        });
+        // close modal
+        $('.send-email').click(function() {
+            var msg = $('#email-msg').val();
+            var subject = $('#email-subject').val();
+
+            if ((msg !='') && (subject != '')) {
+                $('.close-modal').modal('hide');
+            }
+        })
+    </script>
+    <script>
+        jQuery(function($) {
+            $(document).ajaxSend(function() {
+                $('#bg-chat').fadeIn(500);
+            });
+            $('.send-chat').click(function() {
+                $.ajax({
+                type: 'GET',
+                success: function(data) {
+                    var d = $.parseJSON(data);
+                    alert(d.Test);
+                }
+                }).done(function() {
+                setTimeout(function() {
+                    $('#bg-chat').fadeOut(1000);
+                }, 700);
+                });
+            });
+        });
+    </script>
+    <script>
+        const ratings = document.querySelectorAll('.rating')
+        const ratingsContainer = document.querySelector('.ratings-container')
+        const sendBtn = document.querySelector('#feed-send')
+        const panel = document.querySelector('#feed-panel')
+        let selectedRating = 'Satisfied'
+
+        ratingsContainer.addEventListener('click', (e) => {
+            if(e.target.parentNode.classList.contains('rating')) {
+                removeActive()
+                e.target.parentNode.classList.add('active')
+                selectedRating = e.target.innerHTML
+            }
+            if(e.target.classList.contains('rating')) {
+                removeActive()
+                e.target.classList.add('active')
+                selectedRating = e.target.innerHTML
+            }
+
+        })
+
+        sendBtn.addEventListener('click', (e) => {
+            panel.innerHTML = `
+                
+                Thank You!
+                <br />
+                Feedback : ${selectedRating}<br />
+                We'll use your feedback to improve our customer support
+                
+            `
+        })
+
+        function removeActive() {
+            for(let i = 0; i < ratings.length; i++) {
+                ratings[i].classList.remove('active')
+            }
+        }
+    </script>
+
+    <!-- Video Gallery -->
+    <script>
+        const main_video = document.querySelector('.gal-main-video video');
+        const main_video_title = document.querySelector('.gal-main-video .gal-title');
+        const video_playlist = document.querySelector('.gal-video-playlist .gal-videos');
+
+        let data = [
+            {
+                'id': 'a1',
+                'title': 'something 1',
+                'name': 'hd0079_preview.mp4',
+                'duration': '1:00',
+            },
+            {
+                'id': 'a2',
+                'title': 'something 2',
+                'name': 'isham.mp4',
+                'duration': '1:00',
+            },
+            {
+                'id': 'a3',
+                'title': 'something 3',
+                'name': 'pro1.mp4',
+                'duration': '1:00',
+            },
+            {
+                'id': 'a4',
+                'title': 'something 4',
+                'name': 'pro.mp4',
+                'duration': '1:00',
+            },
+            {
+                'id': 'a5',
+                'title': 'something 5',
+                'name': 'hd0079_preview.mp4',
+                'duration': '1:00',
+            },
+            {
+                'id': 'a6',
+                'title': 'something 6',
+                'name': 'pro1.mp4',
+                'duration': '1:00',
+            },
+            {
+                'id': 'a7',
+                'title': 'something 7',
+                'name': 'pro.mp4',
+                'duration': '1:00',
+            },
+            {
+                'id': 'a8',
+                'title': 'something 8',
+                'name': 'isham.mp4',
+                'duration': '1:00',
+            },
+            {
+                'id': 'a9',
+                'title': 'something 9',
+                'name': 'hd0079_preview.mp4',
+                'duration': '1:00',
+            },
+        ];
+
+        data.forEach((video,i)=> {
+            let video_element = `
+                <div class="gal-video" data-id="${video.id}">
+                    <img src="{% static 'img/start.svg' %}" alt=">">
+                    <p>0${i + 1}. </p>
+                    <h3 class="gal-title">${video.title}</h3>
+                    <p class="time">${video.duration}</p>
+                </div>
+            `;
+            video_playlist.innerHTML += video_element;
+        })
+
+        let videos = document.querySelectorAll('.gal-video');
+        videos[0].classList.add('active');
+        videos[0].querySelector('img').src = '{% static "img/pause.svg" %}';
+
+        videos.forEach(selected_video => {
+            selected_video.onclick = () => {
+                for(all_videos of videos) {
+                    all_videos.classList.remove('active')
+                    all_videos.querySelector('img').src = '{% static "img/start.svg" %}';
+                }
+                selected_video.classList.add('active');
+                selected_video.querySelector('img').src = '{% static "img/pause.svg" %}';
+
+                let match_video = data.find(video => video.id == selected_video.dataset.id);
+                console.log(match_video)
+                
+                main_video.src = './static/videos/' +match_video.name;
+                main_video_title.innerHTML = match_video.title;
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}error 500 | OurProject.com{% endblock title %}    
+
+{% block image %}{% endblock image %}
+
+{% block navbar %}{% endblock navbar %}
+
+{% block auto-logout %}{% endblock auto-logout %}
+    
+    
+{% block content %}
+    <div class="text-center error">
+        <div class="text-center text-danger">
+            {% block error-body %}
+            <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_ijdguoxw.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px; transform: translate3d(100px, 0px, 0px);"  loop autoplay></lottie-player>
+            {% endblock error-body %}
+        </div>
+        <h6 class="text-danger mt-4 mb-4" style="font-size: 28px;">{% block reason %}The message no longer exists !{% endblock reason %}</h6>
+        <div class="mt-3 error-txt1">
+            <span style="font-weight: 500; font-size: 20px;">
+                {% block note %}
+                Note: <span>The message was probably deleted from the inbox</span>    
+                {% endblock note %}
+            </span>
+            <br>
+            <span class="text-dark error-txt2">Let's go back to
+                {% if user.is_authenticated %}
+                <a href="{% url 'inbox' %}" class="textdark">Inbox</a>
+                {% else %}
+                <a href="{% url 'home' %}" class="textdark">Home</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+{% endblock content %}
+{% block footer %}{% endblock footer %}
+    

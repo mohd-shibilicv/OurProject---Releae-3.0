@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About | OurProject.com{% endblock title %}
+{% block auto-logout %}{% endblock auto-logout %}
+
+{% block login %}
+<a href="{% url 'home' %}" class="btn btn-outline-success" 
+style="color: #fff;
+background: #009b72;
+border-color: #009b72;
+box-shadow: none;
+padding: 10px 30px;
+border-radius: 25px;
+transition: 0.5s;
+margin-right: 3px;">Home
+</a>
+{% endblock login %}
+
+{% block content %}
+<div class="flex">
+    <h2 style="margin-bottom: 20px; font-weight: bold; color: #009b72;">Client Communication Portal</h2>
+    <div class="desc">
+        <p>A client communication portal is a platform that allows a company to communicate with its clients or customers. This type of portal could be used to provide support, answer questions, or simply keep clients informed about the company's products or services.</p>
+    </div>
+    <div class="features">
+        <div class="brief" style="display: flex; flex-direction: column; text-align: center; font-size: 1.3rem; background: rgba(17, 17, 17, 0.392); border-radius: 20px;">
+            <div>''</div>
+            Our final year project is a web application designed to streamline communication between clients and company employees. The application allows clients to send emails to a central email address, which are then received and analyzed by the application. Based on the contents of the email, the application will route the message to the appropriate employee for handling. The employee can then log in to the application and reply to the client directly, all from within the application. This eliminates the need for employees to constantly check their personal email accounts for client inquiries, and ensures that all communication is centralized and easily accessible. With this application, companies can improve the efficiency and effectiveness of their client communication processes, ultimately leading to better customer satisfaction and retention.
+            <div>''</div>
+            <!-- <p>A desktop application that allows clients to send messages as emails from the frontend and have them handled and responded to by company employees could potentially be called a "customer support email client".</p>
+            <p>The application could have a simple interface with fields for the client to enter their name, email address, and the message they wish to send. The client could then click a "send" button to send the message to a designated email address for the company.</p>
+            <p>On the backend, the company's employees could use the application to view incoming messages, respond to them, and track the status of each message. The employees could also use the application to send emails to clients, such as follow-up emails or confirmation emails.</p>
+            <p>The application could potentially have additional features such as the ability to categorize messages by type or priority, or to assign specific messages to particular employees. It could also have a search function to allow employees to easily find and reference past conversations with clients.</p> -->
+        </div>
+        <br><br><br><br><br>
+        <h4 style="color: rgba(221, 221, 221, 0.866);">Our Client Communication Portal have the following features: </h4>
+        <br>
+        <div class="list">
+            <ul>
+                <li><span>A messaging system that allows clients to send messages or request assistance from the company.</span> This includes a simple form for clients to fill out, as well as the ability for the company to respond to and track incoming messages.A simple interface for clients to enter their name, email address, and the message they wish to send.</li>
+                <li><span>A backend system for employees to view, respond to, and track incoming messages.</span> This includes a dashboard that displays all new and outstanding messages, with the ability to filter or search for specific conversations.</li>
+                <li><span>A messaging interface for employees to communicate with clients.</span> This includes a text editor for composing responses, as well as the ability to attach files or links to the message.</li>
+                <li><span>A system for tracking the status of each message</span> (e.g. "Pending", "Unread", "Read"). This could allow employees to see at a glance which messages need attention and which have already been resolved.</li>
+                <li><span>A customer database that stores contact information and past communication history for each client.</span> This could allow employees to easily reference past conversations and personalize their responses.</li>
+                <li><span>The Application ensures the privacy of the company data.</span> That is, Features such as Auto logout, cache control, auto reloding, data cleanup will provide extra protection to company data.</li>
+            </ul>
+        </div>
+        <br><br>
+    </div>
+    <div class="gal-container">
+        <div class="gal-main-video">
+            <video src="{% static 'videos/hd0079_preview.mp4' %}" controls autoplay></video>
+            <h3 class="gal-title">Title of the Playing video</h3>
+        </div>
+
+        <div class="gal-video-playlist">
+            <div class="gal-videos">
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

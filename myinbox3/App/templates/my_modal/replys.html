@@ -1,0 +1,56 @@
+<div class="modal fade close-modal" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-body text-center" style="padding: .1vw .2vw .1vw .2vw">
+            <form class="was-validated" action="/email" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body" style="padding: 0 3vw">
+                    <div class="modal-sub-header" style="display: flex; align-items: center; justify-content: center;">
+                        <div>
+                            <i class='fas fa-reply'></i>
+                            Reply to&nbsp;
+                        </div>
+                        <div class="customer-name" style="color: rgb(23, 26, 23); font-weight: 700;">
+                            <span style="font-size: 18px;">{{ customer.name }}</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group input-group-sm mb-3" style="display: none;">
+                        <input name="email" value="{{ customer.email }}">
+                    </div>
+                    <!-- Email is hidden to auto get customer email -->
+                    <div class="form-group mb-2">
+                        <input class="form-control" type="email" name="cc" placeholder="CC (optional)" style="border-radius: 20px;">
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" name="message" id="email-msg" style="height: 250px; border-radius: 20px;" placeholder="Put your message here!" required
+                        ></textarea>
+                        <div class="invalid-feedback">Required</div>
+                    </div>
+                    <div class="mb-3">
+                        <select class="form-select" id="email-subject" name="subject" style="border-radius: 20px;" required>
+                            <option value="">Select a subject</option>
+                            <option disabled></option>
+                            <option value="Reply">Reply</option>
+                            <option value="Audit">Audit</option>
+                            <option value="Hiring">Hiring</option>
+                            <option value="Speeches">Speeches</option>
+                            <option value="Payments">Payments</option>
+                            <option value="Documents">Documents</option>
+                        </select>
+                        <div class="invalid-feedback">Required</div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="file" class="form-control" style="border-radius: 20px;" name="attach" title="Optional attachement" multiple>
+                    </div>
+                    <hr>
+                    <div class="mb-3" style="float: right;">
+                        <input type="submit" name="submit" class="btn btn-outline-success btn-sm btn-modal send-email" value="Send">&nbsp;&nbsp;
+                        <button class="btn btn-secondary btn-sm btn-modal" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+</div>

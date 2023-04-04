@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Bot Chat | OurProject.com{% endblock title %}
+{% block image %}{% endblock image %}
+{% block navbar %}{% endblock navbar %}
+
+{% block login %}{% endblock login %}
+
+{% block content %}
+
+<div class="full">
+    {% block top %}
+    <div class="title-tag">
+        <div class="welcome">
+            Hello <span class="text-success">{{ user.get_username }}</span>,
+        </div>
+        <!-- DateTime (desktop mode) -->
+        {% block datetime %}
+        <div class="text-dark" id="desk-datetime" style="font-size: 17px; margin-top: 10px; font-family: unset;">{% now "l, d-m-Y" %} &nbsp;&nbsp;
+            <span style="color: #000; font-weight: bold;" id="clock"></span>
+        </div>
+        {% endblock datetime %}
+        <!-- Menu -->
+        <div class="sidenav">
+            <!-- Overlay -->
+            <div id="overlay"></div>
+            <div id="mobile-menu" class="mobile-main-menu">
+                <div class="text-light" id="mobile-datetime">{% now "l, d-m-Y" %} &nbsp;&nbsp;
+                    <span style="color: #ddd; font-weight: bold;" id="clock"></span>
+                </div>
+                <i class="fa-solid fa-people-group" style="color: rgb(143, 141, 141); font-size: 30px; border-bottom: 2px solid #ddd;"></i>
+                <ul>
+                    <li><a class="mobile-only" href="{% url 'home' %}">Home</a></li>
+                    <li><a class="mobile-only" href="{% url 'admin:index' %}">Admin</a></li>
+                    <li><a class="mobile-only" href="{% url 'admin:password_change' %}">Change Password</a></li>
+                    <li><a class="mobile-only" href="#" style="border-bottom: 1px solid #333; padding-bottom: 20px;">Bot</a></li>
+                    <li><a class="mobile-only" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="uil uil-signout"></i>&nbsp;Logout</a></li>
+                </ul>
+            </div>
+            <button id="menu-btn" class="hamburger" type="button">
+                <span class="hamburger-top"></span>
+                <span class="hamburger-middle"></span>
+                <span class="hamburger-bottom"></span>
+            </button>
+        </div>
+    </div>
+    <div class="sidebar-alt">
+        <div class="logo-name">
+            <div class="logo-image">
+                <i class="fa-solid fa-people-group inbox-people"></i>
+            </div>
+        </div>
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li>
+                    <a href="{% url 'home' %}" title="Home"><i class="uil uil-estate"></i></a>
+                </li>
+                <!-- <li><a href="#" title="Files">
+                    <i class="uil uil-files-landscapes"></i>
+                </a></li> -->
+                <li>
+                    <a href="{% url 'admin:index' %}" title="Admin" target="_blank"><i class='bx bx-user'></i></a>
+                </li>
+                <li>
+                    <a href="{% url 'admin:password_change' %}" target="_blank" title="Change Password">
+                    <i class='bx bx-key bx-flip-horizontal' ></i></a>
+                </li>
+                <li>
+                    <a href="{% url 'bot' %}" title="Bot">
+                    <i class="fa-regular fa-comment-dots"></i></a>
+                </li>
+                <!-- <li><a href="#">
+                    <i class="uil uil-share"></i>
+                </a></li> -->
+            </ul>
+            <ul class="logout-mode">
+                <li>
+                    <a class="logout" title="Logout" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="uil uil-signout"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% endblock top %}
+    <section class="msger">
+        <header class="msger-header" style="padding: 1vw;">
+            <div class="msger-header-title" style="color: #000; font-weight: bold;">
+                <i class="fa-regular fa-comment-dots"></i>&nbsp;&nbsp;AI Chat
+            </div>
+            <div class="msger-header-options">
+                <div>
+                    <a id="btn-chat" href="{% url 'inbox' %}" style="text-decoration: none; color: #000;"><i class="fas fa-people-group"></i>&nbsp;Inbox</a>
+                </div>
+            </div>
+        </header>
+        <div class="card-footer" style="border-top: none;">
+            <form method="post" class="msger-inputarea">
+                {% csrf_token %}
+                <div class="input-group" style="border-radius: 20px;">
+                    <input id="btn-input" type="text" name="user_input" class="form-control msger-input" placeholder="Type your message here..." autocomplete="off" />
+                    <div id="bg-chat">
+                        <div id="chat-pos-spinner">
+                            <span id="spinner-chat"></span>
+                        </div>
+                    </div>
+                    <span class="input-group-btn send-chat">
+                        <button class="msger-send-btn" id="btn-chat" type="submit"><i class="fas fa-paper-plane" style="margin-right: 5px;"></i></button>
+                    </span>
+                </div>
+            </form>
+        </div>
+        <div class="scroll-chat">
+            <main class="msger-chat">
+                <div class="chat-footer">
+                    <a class="btn mt-3" style="background-color: rgba(0, 0, 0, 0.624); border-radius: 10px; color: #fff;" id="btn-chat" href="{% url 'inbox' %}"><i class="fas fa-reply"></i>&nbsp;&nbsp;Back</a>
+                    <a class="btn mt-3 mr-2" id="btn-chat" href="{% url 'clear' %}" style="border-radius: 10px; background-color: #009b72; color: #fff;">Clear Chat</a>
+                </div>
+                {% for message in chat_history %}
+                    {% if message.user_input %}
+                    <div class="msg left-msg">
+                        <div class="msg-img"><img src="{% static 'img/user.ico' %}" alt="You"></div>
+                        <div class="msg-bubble">
+                            <div class="msg-info">
+                            <div class="msg-info-name">{{ user.get_username }}</div>
+                            <div class="msg-info-time">{{ message.timestamp | time:'h:i' }}</div>
+                            </div>
+                            <div class="msg-text">{{ message.user_input }}</div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if message.ai_response %}
+                    <div class="msg right-msg">
+                        <div class="msg-img"><img src="{% static 'img/ai.ico' %}" alt="AI"></div>
+                        <div class="msg-bubble">
+                            <div class="msg-info">
+                            <div class="msg-info-name">AI</div>
+                            <div class="msg-info-time">{{ message.timestamp | time:'h:i' }}</div>
+                            </div>
+                            <div class="msg-text">{{ message.ai_response }}</div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                <!-- <div class="msg right-msg">
+                    <div class="msg-img"><img src="{% static 'img/ai.ico' %}" alt="AI"></div>
+                    <div class="msg-bubble">
+                        <div class="msg-info">
+                        <div class="msg-info-name">AI</div>
+                        </div>
+                        <div class="msg-text">Hello {{ user.get_username }}, How can I help you?</div>
+                    </div>
+                </div> -->
+            </main>
+        </div>
+    </section>
+</div>
+{% block footer %}{% endblock footer %}
+{% endblock content %}

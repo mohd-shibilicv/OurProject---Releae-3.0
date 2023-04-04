@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+<!-- auto logout denied -->
+{% block auto-logout %}{% endblock auto-logout %}
+
+<!-- Page content -->
+{% block content %}
+<div class="content_area text-center justify-content-center" style="animation: fadeIn 5s forwards;">
+    <h1 class="text-dark hero-title">
+        <br><span>Client Communication Portal</span>
+    </h1>
+    <p class="desc-content">Are you tired of constantly checking your personal email for client inquiries?<br> Do you struggle to keep track of all your client communication in one place?<br> Our web application is here to help.</p>
+    <div class="my-3 buttons" style="display: flex; flex-direction: row;">
+        <div class="btnsuccess">
+            <button class="btn btn-success my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#messageModal">Send Message</button>
+        </div>
+        <div class="btnoutlinesuccess">
+            <a href="{% url 'about' %}"><button class="btn btn-outline-success my-2 my-sm-0">About Our Project</button></a>
+        </div>
+    </div>
+    <div class="main">
+        <div class="navigation">
+            <a href="{% url 'bot' %}" style="--i:0;--x:-1;--y:0;" title="Chat"><i class='bx bx-comment-dots'></i></a>
+            <a href="#" style="--i:1;--x:1;--y:0;" title="Project Report"><i class='bx bxs-report'></i></a>
+            <a href="{% url 'profile' %}" style="--i:2;--x:0;--y:-1;" title="Team Members"><i class='bx bxs-group'></i></a>
+            <a href="{% url 'inbox' %}" style="--i:3;--x:0;--y:1;" title="Inbox"><i class='bx bxs-inbox'></i></a>
+            <a href="{% url 'login' %}" style="--i:4;--x:-1;--y:1;" title="Login"><i class='bx bxs-log-in-circle'></i></a>
+            <a href="{% url 'admin:index' %}" target="_blank" style="--i:5;--x:-1;--y:-1;" title="Admin Dashboard"><i class='bx bx-user-circle'></i></a>
+            <a href="{% url 'feedback' %}" style="--i:6;--x:1;--y:-1;" title="Feedback"><i class='bx bxs-pencil'></i></a>
+            <a href="{% url 'about' %}" style="--i:7;--x:1;--y:1;" title="Project Details"><i class='bx bxs-detail'></i></a>
+        </div>
+        <div class="close"><i class='bx bx-x'></i></div>
+    </div>
+</div>
+  <!-- Message -->
+  <!-- <div>
+      <button style="background-color: #5ca08e;" class="btn text-light pulse" data-bs-toggle="modal" data-bs-target="#messageModal">
+          <i class="fas fa-envelope fa-2x"></i>
+      </button>
+  </div> -->
+{% endblock content %}
