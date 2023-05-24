@@ -16,7 +16,7 @@ This is a Django project that serves as a client communication portal for a comp
 1. Clone the repository:
 
    ```
-   git clone https://github.com/your-username/django-project.git
+   git clone https://github.com/mohd-shibilicv/OurProject---Releae-3.0.git
    ```
 
 2. Install the project dependencies:
