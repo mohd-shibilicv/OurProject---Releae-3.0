@@ -8,7 +8,7 @@ This is a Django project that serves as a client communication portal for a comp
 - **Knowledge Base**: A comprehensive knowledge base or FAQ section is available to provide answers to common questions or issues.
 - **Custom Dashboard**: All messsages from clients are organised and analysed efficiently using a dashboard.
 - **Status Updates**: Real-time updates on the status of our products or services are provided through a dedicated status page.
-- **AI Chat**: A Chat Bot is implemented using OpenAI api to help Company Employers.
+- **Chatbot Integration**: We have integrated OpenAI API to provide an intelligent chatbot that can assist clients in answering their queries and providing support.
 - **Secure and Scalable**: The project is built on Django, a robust and secure web framework, ensuring the safety of client communication.
 
 ## Setup Instructions
@@ -30,14 +30,17 @@ This is a Django project that serves as a client communication portal for a comp
    ```
    python manage.py migrate
    ```
+4. Obtain OpenAI API Key: Visit the OpenAI website (https://www.openai.com/) to create an account and obtain an API key.
 
-4. Start the development server:
+5. Configure OpenAI API Key: Add your OpenAI API key to the project's configuration file (settings.py). Locate the OPENAI_API_KEY variable and replace it with your actual API key.
+
+6. Start the development server:
 
    ```
    python manage.py runserver
    ```
 
-5. Access the project in your web browser at `http://localhost:8000`.
+7. Access the project in your web browser at `http://localhost:8000`.
 
 ## Contributing
 
